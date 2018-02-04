@@ -15,3 +15,5 @@ At this moment you need have any stratum proxy ( I use https://github.com/Strate
 So if you use stratum proxy to connect to bitcoin pool ( like p2pool.org ), start nodejs with app.js ( which open only websocket for distribution getwork ) and open in Firefox clientclass.html you can see working machinery for bitcoin creation ( of course only for test and no chance for mine any block !!! ), but this is only start for this project !!!
 
 We will try use webrtc for connect users. See more about webrtc at https://webrtc.org/start/
+
+Our file webrtc.js in nodejs/public/js is under construction ! Don't use !
