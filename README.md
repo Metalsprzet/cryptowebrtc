@@ -17,3 +17,5 @@ So if you use stratum proxy to connect to bitcoin pool ( like p2pool.org ), star
 We will try use webrtc for connect users. See more about webrtc at https://webrtc.org/start/
 
 Our file webrtc.js in nodejs/public/js is under construction ! Don't use !
+
+Look https://github.com/coturn/coturn/wiki/turnserver we need turnserver for better working webrtc
