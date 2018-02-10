@@ -19,3 +19,7 @@ We will try use webrtc for connect users. See more about webrtc at https://webrt
 Our file webrtc.js in nodejs/public/js is under construction ! Don't use !
 
 Look https://github.com/coturn/coturn/wiki/turnserver we need turnserver for better working webrtc
+
+At webrtcbitcoind.js I add connection for websocket and bitcoin protocol for bitcoind.
+
+At bitcoind catalogue you will find bitcoin.conf ( partial ) to set connection with nodejs.
