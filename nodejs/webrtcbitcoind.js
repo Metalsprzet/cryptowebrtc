@@ -1,6 +1,7 @@
 const net = require('net');
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8080 });
+const wss2 = new WebSocket.Server({ port: 9090 });
 
 var servers = [] 
 
@@ -50,8 +51,38 @@ wss.on('connection', (ws) => {
   ws.free = true;
 
   ws.on('message', (message) => {
+
     console.log('received: %s', message);
     if(ws.c) ws.c.send(message)
+  });
+
+  // ws.send('something');
+
+})
+
+
+wss2.on('connection', (ws) => {
+  
+  ws.c = net.createConnection({ port: 8333, host:localhost }, () => {
+  //'connect' listener
+    console.log('connected to server!')
+   
+  });
+
+  ws.c.on('data', (data)=>{
+
+  	 ws.send(data)
+  })
+
+  ws.c.on('end', () => {
+    console.log('disconnected from server')
+    ws.close()
+  });
+
+  ws.on('message', (message) => {
+
+    console.log('received: %s', message)
+    if(ws.c) ws.c.write(message);
   });
 
   // ws.send('something');
