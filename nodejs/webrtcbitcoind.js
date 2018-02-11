@@ -1,9 +1,13 @@
 const net = require('net');
 const WebSocket = require('ws');
+// for bitcoind out
 const wss = new WebSocket.Server({ port: 8080 });
+// for bitcoind in
 const wss2 = new WebSocket.Server({ port: 9090 });
 
 var servers = [] 
+
+
 
 for(let i=0; i<8; i++){
 	
@@ -20,18 +24,25 @@ for(let i=0; i<8; i++){
 	  });
 	  //c.write('hello\r\n');
 	  //c.pipe(c);
+	  let jest = false;
       wss.clients.forEach(function each(client) {
 	      if (client.readyState === WebSocket.OPEN && client.free) {
 	        client.free = false
 	        client.c = c
 	        //client.send(data);
 	        c.ws = client
+	        jest = true;
 	      }
       })
 
       c.on('data', (data) =>{
-      	  if(c.ws)  c.ws.send(data);
+      	  //console.log("c data:", data)
+      	  if(c.ws && c.ws.readyState === WebSocket.OPEN)  c.ws.send(data);
       })
+
+      if(!jest) c.end();
+
+
 
 	}) );
 
@@ -52,8 +63,8 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (message) => {
 
-    console.log('received: %s', message);
-    if(ws.c) ws.c.send(message)
+    //console.log('received: %s', message);
+    if(ws.c) ws.c.write(message)
   });
 
   // ws.send('something');
@@ -61,27 +72,34 @@ wss.on('connection', (ws) => {
 })
 
 
+// 91.209.51.131:8333
+// 5.135.189.124:8333
+// 104.199.229.186:8333
+// 163.172.167.144:8333
 wss2.on('connection', (ws) => {
   
-  ws.c = net.createConnection({ port: 8333, host:localhost }, () => {
+  ws.c =  net.createConnection({ port: 8333, host:'91.209.51.131' }, () => {
   //'connect' listener
-    console.log('connected to server!')
+    console.log('connected to bitcoin server!')
    
-  });
+  })
 
   ws.c.on('data', (data)=>{
-
+  	 console.log(new Date().toLocaleString()+" wss2 c data")
+     //console.log(data)
   	 ws.send(data)
   })
 
   ws.c.on('end', () => {
-    console.log('disconnected from server')
+    console.log('wss2 disconnected from server')
     ws.close()
   });
 
+
+
   ws.on('message', (message) => {
 
-    console.log('received: %s', message)
+    //console.log('received:', message)
     if(ws.c) ws.c.write(message);
   });
 
