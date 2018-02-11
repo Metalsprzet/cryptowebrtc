@@ -1,9 +1,12 @@
-const net = require('net');
-const WebSocket = require('ws');
+const net = require('net')
+const WebSocket = require('ws')
+const uuidv4 = require('uuid/v4')
 // for bitcoind out
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 8080 })
 // for bitcoind in
-const wss2 = new WebSocket.Server({ port: 9090 });
+const wss2 = new WebSocket.Server({ port: 9090 })
+// for webrtc
+const wss3 = new WebSocket.Server({ port: 10010})
 
 var servers = [] 
 
@@ -104,5 +107,30 @@ wss2.on('connection', (ws) => {
   });
 
   // ws.send('something');
+
+})
+
+wss3.on('connection', (ws) => {
+
+	ws.clientID = uuidv4()
+
+	ws.on('message', (message) => {
+
+    
+    	let odp = JSON.parse(message)
+        
+        switch(odp.type) {
+           
+           case 'username': break;
+           case 'video-offer': break;
+           case 'video-answer': break;
+           case 'new-ice-candidat': break;
+           case 'hang-up': break;
+
+        }
+
+    })
+
+
 
 })
