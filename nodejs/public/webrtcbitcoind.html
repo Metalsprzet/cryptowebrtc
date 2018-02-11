@@ -1,0 +1,69 @@
+<html>
+<head>
+	<script>
+		
+		var ws = new WebSocket("ws://127.0.0.1:8080");
+
+		var ws1 = new WebSocket("ws://127.0.0.1:9090")
+
+        ws.onopen = function(event){
+
+        	console.log("open")
+        }
+
+        function uintToString(uintArray) {
+              //var encodedString = String.fromCharCode.apply(null, uintArray),
+              decodedString = new TextDecoder().decode(uintArray);
+              return decodedString;
+        }
+
+
+
+		ws.onmessage = function (event) {
+           //console.log(event.data.toString());
+        //   let reader = new FileReader();
+        //   reader.addEventListener("loadend", function() {
+           // reader.result contains the contents of blob as a typed array
+           //var uint8array = new Uint8Array(reader.result);
+           //console.log(uintToString(uint8array))
+        //    ws1.send(reader.result)
+        //   });
+
+         //  reader.readAsArrayBuffer(event.data);
+           ws1.send(event.data)
+        }
+
+        ws.onclose = function (event){
+          
+          console.log("close")
+        
+        }
+
+
+        ws1.onopen = function(event){
+
+        	console.log("open1")
+        }
+
+        
+
+		ws1.onmessage = function (event) {
+           //console.log(event.data.toString());
+           
+           ws.send(event.data);
+        }
+
+        ws1.onclose = function (event){
+          
+          console.log("close1")
+
+        
+        }
+
+
+
+	</script>
+</head>
+<body>
+<body>	
+</html>
